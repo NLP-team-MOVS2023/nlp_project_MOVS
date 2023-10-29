@@ -39,9 +39,11 @@
 ### 2.2. Этап ML
 
 Предполагаемые задачи:
-1. POS разметка и One-hot encoding
-2. Попытка relation extraction при помощи ML классификатора (RandomForest, KNeighborsClassifier, AdaBoostClassifier, CatBoostingClassifier)
+1. POS-разметка ([предобученными моделями](https://journalofbigdata.springeropen.com/articles/10.1186/s40537-022-00561-y) - HMM, CRF, Наивный Байес, SVM) и One-hot encoding исходных текстов
+2. Попытка relation extraction при помощи ML-классификатора (RandomForest, KNeighborsClassifier, AdaBoostClassifier, CatBoostingClassifier, Support Vector Machine)
+   
 ### 2.3. Этап DL
+
 Наша модель будет делать relation extraction
 
 Предполагаемые задачи:
@@ -57,8 +59,10 @@
 [Обзор relation extraction](https://medium.com/@andreasherman/different-ways-of-doing-relation-extraction-from-text-7362b4c3169e)
 
 ### 2.4. Хотим сделать, но не успеем
-1. Аугментация данных: изменение входных текстов
-2. Подавать на вход текст где описания содержатся в разных предложениях - coreference resolution (возможно МЛ)
+1. Аугментация данных: изменение входных текстов ([Back Translation](https://amitness.com/2020/02/back-translation-in-google-sheets/), [Easy Data Augmentation](https://github.com/jasonwei20/eda_nlp), [NLP Aug](https://github.com/makcedward/nlpaug), [прочее](https://neptune.ai/blog/data-augmentation-nlp))
+2. Подавать на вход текст где описания содержатся в разных предложениях - [coreference resolution](http://nlpprogress.com/english/coreference_resolution.html) (возможно МЛ)
+3. [NER](http://nlpprogress.com/english/named_entity_recognition.html)-подобная разметка для объектов, атрибутов и отношений между ними
+4. Предсказание количества объектов на картинке по ее описанию - для этого отдельным признаком добавить количество объектов (длина списка)
 
 ## 3. Итоговый продукт
 Наша цель: реализовать веб-сервис, который будет иметь следующие функции:
