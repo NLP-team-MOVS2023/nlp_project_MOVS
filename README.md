@@ -79,7 +79,7 @@ _Пример:_
 ```
 
 
-Структура regional _descriptions_v1.2.0_:
+Структура _regional descriptions_v1.2.0_:
 * ``regional descriptions``<br>
 
 ## 2. План работ
