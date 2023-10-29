@@ -39,11 +39,13 @@
 ### 2.2. Этап ML
 ### 2.3. Этап DL
 Наша модель будет делать relation prediction
+
 Предполагаемые задачи:
 1. One-hot encoding
 2. Обучение LSTM-подобной неройнной сети
 3. Изучение Embedding слоев в нейронных сетях Transformer
 4. Обучение BERT нейронных сетей (планируется изучение и сравнение 4-ех моделей из семейства BERT в формате хакатона)
+   
 [Про relation prediction](https://towardsdatascience.com/nlp-deep-learning-for-relation-extraction-9c5d13110afa)
 
 ### 2.4. Хотим сделать, но не успеем
