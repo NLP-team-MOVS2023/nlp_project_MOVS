@@ -41,6 +41,7 @@
 Предполагаемые задачи:
 1. POS-разметка ([предобученными моделями](https://journalofbigdata.springeropen.com/articles/10.1186/s40537-022-00561-y) - HMM, CRF, Наивный Байес, SVM) и One-hot encoding исходных текстов
 2. Попытка relation extraction при помощи ML-классификатора (RandomForest, KNeighborsClassifier, AdaBoostClassifier, CatBoostingClassifier, Support Vector Machine)
+3. [PCA](https://medium.com/@yashj302/principal-component-analysis-pca-nlp-python-ce9caa58bd7a) для входных данных
    
 ### 2.3. Этап DL
 
