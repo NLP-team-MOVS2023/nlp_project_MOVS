@@ -13,6 +13,75 @@
 Полянская Анна
 
 ## 1. Описание данных
+
+Датасет состоит из пересечения двух публичных датасетов - [COCO](https://cocodataset.org/#home) и [Visual Genome](https://homes.cs.washington.edu/~ranjay/visualgenome/index.html) и содержит 50 тыс. наблюдений.
+* Из датасета COCO были взяты аннотации к изображением. Каждое изображение содержит 5 вариаций аннотаций. Планируется из 5 аннотаций оставить одно с наибольшим кол-вом различных частей речи.
+* Visual Genome содержит информацию об объектах на изображениях, их атрибутах и отношениях между объектами. Были использованы следующие части Visual Genome:
+  -   objects_v1.2.0
+  -   attributes_v1.2.0
+  -   regional descriptions_v1.2.0
+  -   relationships_v1.2.0
+
+Для каждого наблюдения существуют следующие параметры:
+
+* ``image_id`` - уникальный id изображения из visual_genome <br>
+* ``coco_id`` - уникальный id изображения из coco <br>
+* ``annt_id`` - номер аннотации (1-5)<br>
+
+Параметры объектов на картинке (объектов и субъектов в описании):
+* ``objects`` - уникальный id объекта
+* ``names``: список имен, ассоциированных с объектом<br>
+* ``synsets``: список синсетов [WordNet](https://www.tutorialspoint.com/synsets-for-a-word-in-wordnet-in-nlp)
+
+ Параметры атрибутов объектов:
+* ``attributes`` - список атрибутов
+
+Параметры отношений между объектами:
+* ``relationship_id``: уникальный id связи/отношения
+* ``predicate``: предикат, описывающий отношения между объектами (субъектом и объектом)
+
+Структура _objects_v1.2.0_:
+* ``object_id``
+* ``names``
+* ``synsets``
+
+Структура _attributes_v1.2.0_:
+* ``object_id``
+* ``names``
+* ``synsets``
+* ``attributes``
+
+Структура _relationships_v1.2.0_:
+* ``relationship_id``
+* субъект:
+  -   ``object_id``
+  -   ``names``
+  -   ``synsets``
+* объект:
+  -   ``object_id``
+  -   ``names``
+  -   ``synsets``
+* ``predicate``
+
+_Пример:_
+```{
+    "relationship_id": 15928, 
+    "predicate": "wears", 
+    "synsets": "['wear.v.01']", 
+    "subject": 
+        { "object_id": 1058529, 
+        "names": [ "man" ], 
+        "synsets": [ "man.n.01" ]}, 
+    "object": 
+        {"object_id": 5048, 
+        "names": [ "sneakers" ], 
+        "synsets": [ "gym_shoe.n.01" ]}}
+```
+
+
+Структура regional _descriptions_v1.2.0_:
+* ``regional descriptions``<br>
+
 ## 2. План работ
 ### 2.1. Разведочный анализ данных и первичная аналитика данных
 В данном блоке мы планиурем выполнить следующие задачи:
