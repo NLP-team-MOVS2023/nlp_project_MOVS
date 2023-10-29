@@ -37,13 +37,17 @@
 3. Понять характер данных, с которыми мы будем в дальнейшем работать
 
 ### 2.2. Этап ML
+
+Предполагаемые задачи:
+1. POS разметка
+2. Попытка relation extraction при помощи ML классификатора (RandomForest, KNeighborsClassifier, AdaBoostClassifier, CatBoostingClassifier)
 ### 2.3. Этап DL
 Наша модель будет делать relation extraction
 
 Предполагаемые задачи:
-1. One-hot encoding
-2. Обучение LSTM-подобной неройнной сети
-3. Изучение Embedding слоев в нейронных сетях Transformer
+1. Необходимая предобработка данных (из ML части в том числе) и One-hot encoding
+2. Изучение Embedding слоев в нейронных сетях
+3. Обучение LSTM-подобной неройнной сети
 4. Обучение BERT нейронных сетей (планируется изучение и сравнение 4-ех моделей из семейства BERT в формате хакатона)
    
 [Про relation prediction](https://towardsdatascience.com/nlp-deep-learning-for-relation-extraction-9c5d13110afa)
