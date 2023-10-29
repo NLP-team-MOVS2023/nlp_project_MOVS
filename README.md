@@ -48,6 +48,10 @@
    
 [Про relation prediction](https://towardsdatascience.com/nlp-deep-learning-for-relation-extraction-9c5d13110afa)
 
+[Примеры relation extraction](https://towardsdatascience.com/nlp-deep-learning-for-relation-extraction-9c5d13110afa](https://nlpprogress.com/english/relationship_extraction.html)
+
+[Обзор relation extraction](https://medium.com/@andreasherman/different-ways-of-doing-relation-extraction-from-text-7362b4c3169e)
+
 ### 2.4. Хотим сделать, но не успеем
 1. Аугментация данных: изменение входных текстов
 2. Подавать на вход текст где описания содержатся в разных предложениях - coreference resolution (возможно МЛ)
