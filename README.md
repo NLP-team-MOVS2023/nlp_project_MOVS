@@ -38,7 +38,7 @@
 
 ### 2.2. Этап ML
 ### 2.3. Этап DL
-Наша модель будет делать relation prediction
+Наша модель будет делать relation extraction
 
 Предполагаемые задачи:
 1. One-hot encoding
@@ -48,7 +48,7 @@
    
 [Про relation prediction](https://towardsdatascience.com/nlp-deep-learning-for-relation-extraction-9c5d13110afa)
 
-[Примеры relation extraction](https://towardsdatascience.com/nlp-deep-learning-for-relation-extraction-9c5d13110afa](https://nlpprogress.com/english/relationship_extraction.html)
+[Примеры relation extraction](https://nlpprogress.com/english/relationship_extraction.html)
 
 [Обзор relation extraction](https://medium.com/@andreasherman/different-ways-of-doing-relation-extraction-from-text-7362b4c3169e)
 
