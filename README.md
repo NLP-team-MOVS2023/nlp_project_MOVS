@@ -174,13 +174,13 @@ _Пример:_
 3. Предоставлять пользователю возможность выгружать размеченный текст в формате json. Пример выгрузки:
 ```
 {
-“background”: “forest”,
-“objects”: [“girl”, “flower”, “magic”],
-“positions”: [“center”, “in human hand”, “ everywhere”]
-“obj_descriptions”: {
-  “1”: [“green eyes”, “blond hair”, “smile”],
-  “2”: [“purple”],
-  “3”: []
+"background": "forest",
+"objects": ["girl", "flower", "magic"],
+"positions": ["center", "in human hand", "everywhere"]
+"obj_descriptions": {
+  "1": ["green eyes", "blond hair", "smile"],
+  "2": ["purple"],
+  "3": []
   }
 }
 ```
@@ -198,6 +198,6 @@ _Пример:_
 4. Сервер для деплоя веб-сервиса
 5. Бакет на хранилище S3 от Яндекса
 
-Примерная первичная схема пайплайна обучена планируется следующая:
+Первичная схема пайплайна обучена планируется следующая:
 
 ![Pipeline](https://github.com/NLP-team-MOVS2023/nlp_project_MOVS/blob/main/assets/pipeline.drawio.svg)
