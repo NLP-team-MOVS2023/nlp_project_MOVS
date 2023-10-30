@@ -200,4 +200,4 @@ _Пример:_
 
 Примерная первичная схема пайплайна обучена планируется следующая:
 
-![Project drawio](https://github.com/NGeraskina/nlp_project_MOVS/assets/35665662/4e927bd1-d0a4-4c60-89c2-e2599b20b38c)
+![Pipeline](https://github.com/NLP-team-MOVS2023/nlp_project_MOVS/blob/main/assets/pipeline.drawio.svg)
