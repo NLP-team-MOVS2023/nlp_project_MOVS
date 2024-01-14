@@ -49,4 +49,4 @@
 5. Предметы: wooden bench, lush green, park bench
 
 6. Действия: flying a kite, getting ready, playing a game, driving down
-![[newplot - 2023-11-15T221236.489.png]]
+![Top collocations](assets/eda_collocations.png)
