@@ -3,3 +3,4 @@ dvc == 3.39.0
 dvc-gdrive
 joblib
 uvicorn
+fastapi
