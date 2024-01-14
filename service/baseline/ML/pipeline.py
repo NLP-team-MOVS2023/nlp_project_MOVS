@@ -1,7 +1,6 @@
 import pandas as pd
 import dvc.api
 import joblib
-import logging
 
 
 def predict_pipeline(js):
@@ -23,16 +22,22 @@ def predict_pipeline(js):
                     'with': 9
                     }
     
-    model_pkl_file = "service/baseline/src/RFClf.h5"
-    vectorizer_file = "service/baseline/src/CountVectorizer.h5"
-    repo='https://github.com/NLP-team-MOVS2023/nlp_project_MOVS.git'
+    model_pkl_file = "src/RFClf.pkl"
+    vectorizer_file = "src/CountVectorizer.pkl"
+    # repo='https://github.com/NLP-team-MOVS2023/nlp_project_MOVS.git'
 
 
-    with dvc.api.open(model_pkl_file, repo=repo, mode='rb') as file:
-        model = joblib.load(file)
+    # with dvc.api.open(model_pkl_file, repo=repo, mode='rb') as file:
+    #     model = joblib.load(file)
 
-    with dvc.api.open(vectorizer_file, repo=repo, mode='rb') as file:
-        vec = joblib.load(file)
+    # with dvc.api.open(vectorizer_file, repo=repo, mode='rb') as file:
+    #     vec = joblib.load(file)
+
+    with open(model_pkl_file, 'rb') as f:
+        model = joblib.load(f)
+    
+    with open(vectorizer_file, 'rb') as f:
+        vec = joblib.load(f)
 
     df = pd.DataFrame.from_dict(js, orient='index').T
 
