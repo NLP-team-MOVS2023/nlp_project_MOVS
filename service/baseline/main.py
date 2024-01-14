@@ -1,6 +1,6 @@
-from fastapi import FastAPI, HTTPException, Response
-from schemas import ObjectSubject, PredictProba
-import joblib
+from fastapi import FastAPI
+from schemas import ObjectSubject
+from ML.pipeline import predict_pipeline
 
 app = FastAPI()
 
@@ -8,10 +8,9 @@ app = FastAPI()
 def root__get():
     return {"message": "Hello World"}
 
-@app.post('/predict_proba',
-         response_model=PredictProba,
-         summary='Predict Proba')
-
-def predict_proba(vals: ObjectSubject):
-    # pipeline = joblib.load('')
-    return {'value':4.5}
+@app.post('/predict',
+         summary='Predict')
+def predict(vals: ObjectSubject):
+    '''Uploads samples and returns predictions as Json'''
+    dict_vals = dict(vals)
+    return predict_pipeline(dict_vals)

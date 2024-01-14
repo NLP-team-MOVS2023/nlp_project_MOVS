@@ -2,11 +2,11 @@ from pydantic import BaseModel
 from enum import Enum
 
 class ObjectSubject(BaseModel):
-    object: str
-    subject: str
+    objects: list
+    subjects: list
 
 class PredictProba(BaseModel):
-    value: float
+    value: dict
     
 class Timestamp(BaseModel):
     id: int
