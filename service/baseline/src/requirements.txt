@@ -1,1 +1,4 @@
 pandas == 1.5.3
+dvc == 3.39.0
+dvc-gdrive
+joblib
