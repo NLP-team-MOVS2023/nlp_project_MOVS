@@ -1,4 +1,5 @@
 import pandas as pd
+import dvc.api
 import pickle
 
 def predict_pipeline(js):
@@ -22,11 +23,12 @@ def predict_pipeline(js):
     
     model_pkl_file = "src/RFClf.pkl"
     vectorizer_file = "src/CountVectorizer.pkl"
+    repo='https://github.com/NLP-team-MOVS2023/nlp_project_MOVS.git'
 
-    with open(model_pkl_file, 'rb') as file:
+    with dvc.api.open(model_pkl_file, repo=repo, encoding="utf-8") as file:
         model = pickle.load(file)
 
-    with open(vectorizer_file, 'rb') as file:
+    with dvc.api.open(model_pkl_file, repo=repo, encoding="utf-8") as file:
         vec = pickle.load(file)
 
     df = pd.DataFrame.from_dict(js, orient='index').T
