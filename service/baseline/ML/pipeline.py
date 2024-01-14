@@ -1,7 +1,6 @@
 import pandas as pd
 import pickle
 
-
 def predict_pipeline(js):
     """
     Пайплайн препроцессинга данных и осуществления предсказания
@@ -20,17 +19,17 @@ def predict_pipeline(js):
                     'wearing': 8,
                     'with': 9
                     }
-
-    model_pkl_file = "RFClf.pkl"
-    vectorizer_file = "CountVectorizer.pkl"
+    
+    model_pkl_file = "src/RFClf.pkl"
+    vectorizer_file = "src/CountVectorizer.pkl"
 
     with open(model_pkl_file, 'rb') as file:
         model = pickle.load(file)
 
-    df = pd.DataFrame.from_dict(js, orient='index')
-
     with open(vectorizer_file, 'rb') as file:
         vec = pickle.load(file)
+
+    df = pd.DataFrame.from_dict(js, orient='index').T
 
     X_objects = pd.DataFrame(vec.transform(df['objects']).todense())
     X_subjects = pd.DataFrame(vec.transform(df['subjects']).todense())
