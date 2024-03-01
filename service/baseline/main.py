@@ -4,13 +4,14 @@ from ML.pipeline import predict_pipeline
 
 app = FastAPI()
 
+
 @app.get('/')
-def root__get():
+def root_get():
     return {"message": "Hello World"}
 
-@app.post('/predict',
-         summary='Predict')
+
+@app.post('/predict', summary='Predict')
 def predict(vals: ObjectSubject):
-    '''Uploads samples and returns predictions as Json'''
+    """Uploads samples and returns predictions as Json"""
     dict_vals = dict(vals)
     return predict_pipeline(dict_vals)
