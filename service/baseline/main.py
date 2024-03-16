@@ -23,7 +23,6 @@ except:
 
 app = FastAPI()
 
-
 @app.get('/')
 def root_get():
     return {"message": "Добро пожаловать на сервис для проекта"}
@@ -100,11 +99,11 @@ def create_user(user: str):
     try:
         base_df = pd.read_sql('select * from user_table', con=conn)
         print(base_df)
-        if base_df[base_df['name'] == user.name].empty():
+        if base_df[base_df['name'] == user].empty():
             cur.execute(f'''INSERT
                             INTO
                             users
-                            VALUES({user.base_df.id.max() + 1}, {user.name}, {time.mktime(datetime.datetime.now().timetuple())});''')
+                            VALUES({base_df.id.max() + 1}, {user}, {time.mktime(datetime.datetime.now().timetuple())});''')
             return {"message": "Юзер удачно добавлен"}
         else:
             return {"message": "Юзер существует"}
