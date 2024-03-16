@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
-from schemas import ObjectSubject
-from ML.pipeline import predict_pipeline
-from service.baseline.db.config_reader import config
+from .schemas import ObjectSubject
+from .ML.pipeline import predict_pipeline
+# from service.baseline.db.config_reader import config
 import os
 import psycopg2
 import pandas as pd
@@ -24,8 +24,8 @@ except:
 app = FastAPI()
 
 @app.get('/')
-def root_get():
-    return {"message": "Добро пожаловать на сервис для проекта"}
+def root() -> str:
+    return "Добро пожаловать на сервис для проекта"
 
 
 @app.get('/ping')
@@ -34,11 +34,11 @@ def ping_get():
 
 
 @app.post('/predict', summary='Predict')
-def predict(vals: ObjectSubject, user):
+def predict(vals: ObjectSubject, user: str):
     """Uploads samples and returns predictions as Json"""
-
     try:
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
+        conn.autocommit = True
         cur = conn.cursor()
     except:
         raise HTTPException(status_code=422)
@@ -49,6 +49,8 @@ def predict(vals: ObjectSubject, user):
     row = cur.fetchone()
     if row:
         max_id = row[0] + 1
+    else:
+        max_id = 0
 
     cur.execute(f'''select user_id from users where name = "{user}";''')
     row = cur.fetchone()
@@ -73,6 +75,7 @@ def predict(vals: ObjectSubject, user):
 def get_result(res_id: int):
     try:
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
+        conn.autocommit = True
         cur = conn.cursor()
     except:
         raise HTTPException(status_code=422)
@@ -88,22 +91,25 @@ def get_result(res_id: int):
     return res
 
 
-@app.post('/create_user')
-def create_user(user: str):
+@app.post('/create_user/{user}')
+def create_user(user:str):
+    print(user)
     try:
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
+        conn.autocommit = True
         cur = conn.cursor()
     except:
         raise HTTPException(status_code=422)
 
     try:
-        base_df = pd.read_sql('select * from user_table', con=conn)
+        base_df = pd.read_sql('select * from users', con=conn)
         print(base_df)
-        if base_df[base_df['name'] == user].empty():
+        if base_df[base_df['name'] == user].empty:
+            # base_df.id.max()+1
             cur.execute(f'''INSERT
                             INTO
-                            users
-                            VALUES({base_df.id.max() + 1}, {user}, {time.mktime(datetime.datetime.now().timetuple())});''')
+                            users (id, name, registry_timestamp)
+                            VALUES({base_df.id.max()+1}, '{user}', {time.mktime(datetime.datetime.now().timetuple())});''')
             return {"message": "Юзер удачно добавлен"}
         else:
             return {"message": "Юзер существует"}
