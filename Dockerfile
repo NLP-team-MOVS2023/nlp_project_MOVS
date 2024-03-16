@@ -7,7 +7,9 @@
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
 ARG PYTHON_VERSION=3.12.1
-FROM python:${PYTHON_VERSION}-slim-bullseye as base
+FROM debian:bullseye-slim
+
+ENV GPG_KEY A035C8C19219BA821ECEA86B64E628F8D684696D
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -17,6 +19,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
+ADD . /app
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
@@ -30,13 +33,10 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
-RUN apt-get update \
-    && apt-get install --no-install-recommends -qy \
-    gcc 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
-# Leverage a bind mount to requirements.txt to avoid having to copy them into
-# into this layer.
+RUN set -xe \
+    && apt-get update -y \
+    && apt-get install -y python3-pip
+
 COPY service/baseline/src/requirements.txt requirements.txt
 RUN pip install \
     --upgrade pip \
@@ -53,3 +53,4 @@ EXPOSE 8000
 
 # Run the application.
 CMD uvicorn 'service.baseline.main:app' --host=0.0.0.0 --port=8000
+ 

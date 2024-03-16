@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from schemas import ObjectSubject
-from ML.pipeline import predict_pipeline
+from .schemas import ObjectSubject
+from .ML.pipeline import predict_pipeline
 
 app = FastAPI()
 
