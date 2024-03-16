@@ -8,18 +8,24 @@ import pandas as pd
 import datetime
 import time
 
-try:
-    HOST_DB = config.HOST_DB.get_secret_value()
-    PORT_DB = config.PORT_DB.get_secret_value()
-    USER_DB = config.USER_DB.get_secret_value()
-    PASSWORD_DB = config.PASSWORD_DB.get_secret_value()
-    NAME_DB = config.NAME_DB.get_secret_value()
-except:
-    HOST_DB = os.getenv('HOST_DB')
-    PORT_DB = os.getenv('PORT_DB')
-    USER_DB = os.getenv('USER_DB')
-    PASSWORD_DB = os.getenv('PASSWORD_DB')
-    NAME_DB = os.getenv('NAME_DB')
+# try:
+#     HOST_DB = config.HOST_DB.get_secret_value()
+#     PORT_DB = config.PORT_DB.get_secret_value()
+#     USER_DB = config.USER_DB.get_secret_value()
+#     PASSWORD_DB = config.PASSWORD_DB.get_secret_value()
+#     NAME_DB = config.NAME_DB.get_secret_value()
+# except:
+#     HOST_DB = os.getenv('HOST_DB')
+#     PORT_DB = os.getenv('PORT_DB')
+#     USER_DB = os.getenv('USER_DB')
+#     PASSWORD_DB = os.getenv('PASSWORD_DB')
+#     NAME_DB = os.getenv('NAME_DB')
+
+HOST_DB = 'localhost'
+PORT_DB = 5432
+USER_DB = 'postgres'
+PASSWORD_DB = 'postgres'
+NAME_DB = 'nlp_project'
 
 app = FastAPI()
 
@@ -34,7 +40,7 @@ def ping_get():
 
 
 @app.post('/predict', summary='Predict')
-def predict(vals: ObjectSubject, user: str):
+def predict(vals: ObjectSubject, user: str) -> int:
     """Uploads samples and returns predictions as Json"""
     try:
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
@@ -68,7 +74,7 @@ def predict(vals: ObjectSubject, user: str):
 
     cur.close()
     conn.close()
-    return max_id
+    return predicate
 
 
 @app.get('/get_result', summary='Result')
@@ -84,7 +90,7 @@ def get_result(res_id: int):
     rows = cur.fetchall()
     res = {}
     for i in enumerate(rows):
-        res[i] = {'subjects': rows[2], 'objects': rows[3], 'predicates': rows[4], 'probabilities': rows[5]}
+        res[i] = {'subject': rows[2], 'object': rows[3], 'predicate': rows[4], 'probability': rows[5]}
 
     cur.close()
     conn.close()
@@ -118,3 +124,6 @@ def create_user(user:str):
         conn.close()
     except:
         raise HTTPException(status_code=422)
+
+
+
