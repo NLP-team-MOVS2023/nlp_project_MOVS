@@ -1,31 +1,29 @@
 from fastapi import FastAPI, HTTPException
 from .schemas import ObjectSubject
 from .ML.pipeline import predict_pipeline
-# from service.baseline.db.config_reader import config
 import os
 import psycopg2
 import pandas as pd
 import datetime
 import time
+from dotenv import load_dotenv
+from .db.config_reader import config
 
-# try:
-#     HOST_DB = config.HOST_DB.get_secret_value()
-#     PORT_DB = config.PORT_DB.get_secret_value()
-#     USER_DB = config.USER_DB.get_secret_value()
-#     PASSWORD_DB = config.PASSWORD_DB.get_secret_value()
-#     NAME_DB = config.NAME_DB.get_secret_value()
-# except:
-#     HOST_DB = os.getenv('HOST_DB')
-#     PORT_DB = os.getenv('PORT_DB')
-#     USER_DB = os.getenv('USER_DB')
-#     PASSWORD_DB = os.getenv('PASSWORD_DB')
-#     NAME_DB = os.getenv('NAME_DB')
+load_dotenv(verbose=True)
 
-HOST_DB = 'localhost'
-PORT_DB = 5432
-USER_DB = 'postgres'
-PASSWORD_DB = 'postgres'
-NAME_DB = 'nlp_project'
+try:
+    HOST_DB = config.HOST_DB.get_secret_value()
+    PORT_DB = config.PORT_DB.get_secret_value()
+    USER_DB = config.USER_DB.get_secret_value()
+    PASSWORD_DB = config.PASSWORD_DB.get_secret_value()
+    NAME_DB = config.NAME_DB.get_secret_value()
+except:
+    HOST_DB = os.getenv('HOST_DB')
+    PORT_DB = os.getenv('PORT_DB')
+    USER_DB = os.getenv('USER_DB')
+    PASSWORD_DB = os.getenv('PASSWORD_DB')
+    NAME_DB = os.getenv('NAME_DB')
+
 
 app = FastAPI()
 
@@ -109,13 +107,15 @@ def create_user(user:str):
 
     try:
         base_df = pd.read_sql('select * from users', con=conn)
-        print(base_df)
+        if base_df.empty:
+            max_id = 0
+        else:
+            max_id = base_df.id.max()+1
         if base_df[base_df['name'] == user].empty:
-            # base_df.id.max()+1
             cur.execute(f'''INSERT
                             INTO
                             users (id, name, registry_timestamp)
-                            VALUES({base_df.id.max()+1}, '{user}', {time.mktime(datetime.datetime.now().timetuple())});''')
+                            VALUES({max_id}, '{user}', {time.mktime(datetime.datetime.now().timetuple())});''')
             return {"message": "Юзер удачно добавлен"}
         else:
             return {"message": "Юзер существует"}
