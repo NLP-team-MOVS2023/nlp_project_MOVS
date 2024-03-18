@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     USER_DB: SecretStr
     PASSWORD_DB: SecretStr
     NAME_DB: SecretStr
-    model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
+    model_config = SettingsConfigDict(env_file=r'C:\Users\Надя\PycharmProjects\nlp_project_MOVS\service\baseline\db\.env', env_file_encoding='utf-8')
 
 
 config = Settings()
