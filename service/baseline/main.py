@@ -24,8 +24,8 @@ except:
     PASSWORD_DB = os.getenv('PASSWORD_DB')
     NAME_DB = os.getenv('NAME_DB')
 
-
 app = FastAPI()
+
 
 @app.get('/')
 def root() -> str:
@@ -96,7 +96,7 @@ def get_result(res_id: int):
 
 
 @app.post('/create_user/{user}')
-def create_user(user:str):
+def create_user(user: str):
     print(user)
     try:
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
@@ -110,7 +110,7 @@ def create_user(user:str):
         if base_df.empty:
             max_id = 0
         else:
-            max_id = base_df.id.max()+1
+            max_id = base_df.id.max() + 1
         if base_df[base_df['name'] == user].empty:
             cur.execute(f'''INSERT
                             INTO
@@ -126,4 +126,27 @@ def create_user(user:str):
         raise HTTPException(status_code=422)
 
 
+@app.get('/get_all_users')
+def get_all_users():
+    try:
+        conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
+        conn.autocommit = True
+        cur = conn.cursor()
 
+        base_df = pd.read_sql('select * from users', con=conn)
+        return base_df.to_dict('records')
+    except:
+        raise HTTPException(status_code=422)
+
+
+@app.get('/get_all_results')
+def get_all_results():
+    try:
+        conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
+        conn.autocommit = True
+        cur = conn.cursor()
+
+        base_df = pd.read_sql('select * from ml_model_actions', con=conn)
+        return base_df.to_dict('records')
+    except:
+        raise HTTPException(status_code=422)
