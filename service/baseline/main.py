@@ -7,22 +7,22 @@ import pandas as pd
 import datetime
 import time
 from dotenv import load_dotenv
-from .db.config_reader import config
+# from db.config_reader import config
 
 load_dotenv(verbose=True)
 
-try:
-    HOST_DB = config.HOST_DB.get_secret_value()
-    PORT_DB = config.PORT_DB.get_secret_value()
-    USER_DB = config.USER_DB.get_secret_value()
-    PASSWORD_DB = config.PASSWORD_DB.get_secret_value()
-    NAME_DB = config.NAME_DB.get_secret_value()
-except:
-    HOST_DB = os.getenv('HOST_DB')
-    PORT_DB = os.getenv('PORT_DB')
-    USER_DB = os.getenv('USER_DB')
-    PASSWORD_DB = os.getenv('PASSWORD_DB')
-    NAME_DB = os.getenv('NAME_DB')
+# try:
+#     HOST_DB = config.HOST_DB.get_secret_value()
+#     PORT_DB = config.PORT_DB.get_secret_value()
+#     USER_DB = config.USER_DB.get_secret_value()
+#     PASSWORD_DB = config.PASSWORD_DB.get_secret_value()
+#     NAME_DB = config.NAME_DB.get_secret_value()
+# except:
+HOST_DB = os.getenv('HOST_DB')
+PORT_DB = os.getenv('PORT_DB')
+USER_DB = os.getenv('USER_DB')
+PASSWORD_DB = os.getenv('PASSWORD_DB')
+NAME_DB = os.getenv('NAME_DB')
 
 app = FastAPI()
 
@@ -44,7 +44,7 @@ def predict(vals: ObjectSubject, user: str) -> int:
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
         conn.autocommit = True
         cur = conn.cursor()
-    except:
+    except psycopg2.OperationalError:
         raise HTTPException(status_code=422)
 
     dict_vals = dict(vals)
@@ -81,7 +81,7 @@ def get_result(res_id: int):
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
         conn.autocommit = True
         cur = conn.cursor()
-    except:
+    except psycopg2.OperationalError:
         raise HTTPException(status_code=422)
 
     cur.execute(f'''select * from ml_model_actions where id = {res_id};''')
@@ -102,7 +102,7 @@ def create_user(user: str):
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
         conn.autocommit = True
         cur = conn.cursor()
-    except:
+    except psycopg2.OperationalError:
         raise HTTPException(status_code=422)
 
     try:
@@ -122,7 +122,7 @@ def create_user(user: str):
 
         cur.close()
         conn.close()
-    except:
+    except KeyError:
         raise HTTPException(status_code=422)
 
 
@@ -131,11 +131,9 @@ def get_all_users():
     try:
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
         conn.autocommit = True
-        cur = conn.cursor()
-
         base_df = pd.read_sql('select * from users', con=conn)
         return base_df.to_dict('records')
-    except:
+    except psycopg2.OperationalError:
         raise HTTPException(status_code=422)
 
 
@@ -144,9 +142,7 @@ def get_all_results():
     try:
         conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
         conn.autocommit = True
-        cur = conn.cursor()
-
         base_df = pd.read_sql('select * from ml_model_actions', con=conn)
         return base_df.to_dict('records')
-    except:
+    except psycopg2.OperationalError:
         raise HTTPException(status_code=422)

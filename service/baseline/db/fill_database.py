@@ -1,13 +1,12 @@
 import psycopg2
-import os
 from sqlalchemy import create_engine
 from create_tables_sql import commands
 
-HOST_DB = os.getenv('HOST_DB')
-PORT_DB = os.getenv('PORT_DB')
-USER_DB = os.getenv('USER_DB')
-PASSWORD_DB = os.getenv('PASSWORD_DB')
-NAME_DB = os.getenv('NAME_DB')
+HOST_DB = 'dpg-cnvsglmd3nmc73f5mi3g-a.frankfurt-postgres.render.com'
+PORT_DB = 5432
+USER_DB = 'nlp_project_gmuh_user'
+PASSWORD_DB = 'nYVFTFlSYHF6DL1dLhLH19aDNIDtpR0e'
+NAME_DB = 'nlp_project_gmuh'
 
 # print(HOST_DB, PORT_DB, USER_DB, PASSWORD_DB, NAME_DB)
 conn = psycopg2.connect(dbname=NAME_DB, user=USER_DB, password=PASSWORD_DB, host=HOST_DB, port=PORT_DB)
