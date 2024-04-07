@@ -43,79 +43,6 @@
 * ``relationship_id`` - уникальный id связи/отношения
 * ``predicate`` - предикат, описывающий отношения между объектами (субъектом и объектом)
 
-Структура _objects_v1.2.0_:
-* ``object_id``
-* ``names``
-* ``synsets``
-
-*Пример:*
-```
-{
-    "object_id": 1058498,
-    "names": [ "clock" ], 
-    "synsets": [ "clock.n.01" ]
-}
-```
-
-Структура _attributes_v1.2.0_:
-* ``object_id``
-* ``names``
-* ``synsets``
-* ``attributes``
-
-*Пример:*
-```
-{
-    "object_id": 1058498, 
-    "names": [ "clock" ],
-    "synsets": [ "clock.n.01" ],
-    "attributes": [ "green", "tall" ]
-}
-```
-
-Структура _relationships_v1.2.0_:
-* ``relationship_id``
-* субъект:
-  -   ``object_id``
-  -   ``names``
-  -   ``synsets``
-* объект:
-  -   ``object_id``
-  -   ``names``
-  -   ``synsets``
-* ``predicate``
-
-_Пример:_
-```
-{
-    "relationship_id": 15928, 
-    "predicate": "wears", 
-    "synsets": "['wear.v.01']", 
-    "subject": 
-        { "object_id": 1058529, 
-        "names": [ "man" ], 
-        "synsets": [ "man.n.01" ]}, 
-    "object": 
-        {"object_id": 5048, 
-        "names": [ "sneakers" ], 
-        "synsets": [ "gym_shoe.n.01" ]}
-}
-```
-
-
-Структура _regional descriptions_v1.2.0_:
-* ``region_id`` - уникальный id региона
-* ``image_id`` - уникальный id изображения (соответсвует vg_id)
-* ``phrase``: фраза, описывающая регион
-
-_Пример:_
-```
-{
-    "region_id": 1382, 
-    "image_id": 1, 
-    "phrase": "the clock is green in colour"
-}
-```
 
 Более подробное описание датасета представлено [здесь](https://github.com/NLP-team-MOVS2023/nlp_project_MOVS/edit/main/data.md).
 
@@ -201,3 +128,7 @@ _Пример:_
 Первичная схема пайплайна обучена планируется следующая:
 
 ![Pipeline](https://github.com/NLP-team-MOVS2023/nlp_project_MOVS/blob/main/assets/pipeline.drawio.svg)
+
+## 5. Примеры работы с телеграм ботом и тестирование проекта
+
+![Pipeline](https://github.com/NLP-team-MOVS2023/nlp_project_MOVS/blob/main/assets/бот.gif)
